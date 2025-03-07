@@ -38,23 +38,27 @@ public class Movement extends System {
         var velocity = entity.get(Velocity.class);
         var position = entity.get(Position.class);
 
-        float speed = 10f;
+        float rotationSpeed = 50f; // degrees per second (adjust as needed)
+        float thrustSpeed = 50f;   // thrust speed (adjust as needed)
+
         switch (movable.facing) {
             case RotationLeft:
-                velocity.xVelocity = -speed;
+                position.angle -= (float) (rotationSpeed * elapsedTime);
                 break;
             case RotationRight:
-                velocity.xVelocity = speed;
+                position.angle += (float) (rotationSpeed * elapsedTime);
                 break;
             case Up:
-                velocity.yVelocity = -speed;
+                velocity.xVelocity += (float) (Math.cos(Math.toRadians(position.angle - 90)) * thrustSpeed * elapsedTime);
+                velocity.yVelocity += (float) (Math.sin(Math.toRadians(position.angle - 90)) * thrustSpeed * elapsedTime);
                 break;
             case Stopped:
-                velocity.xVelocity = 0;
+                // Optionally add friction here if desired
                 break;
         }
 
         position.x += (float) (velocity.xVelocity * elapsedTime);
         position.y += (float) (velocity.yVelocity * elapsedTime);
     }
+
 }

@@ -4,6 +4,7 @@ import edu.usu.graphics.Color;
 import edu.usu.graphics.Graphics2D;
 import edu.usu.graphics.Rectangle;
 import edu.usu.graphics.Texture;
+import org.joml.Vector2f;
 
 public class Renderer extends System {
     private final float CELL_SIZE;
@@ -44,7 +45,13 @@ public class Renderer extends System {
         area.width = CELL_SIZE;
         area.height = CELL_SIZE;
 
-        graphics.draw(appearance.image, area, appearance.color);
+        graphics.draw(
+                appearance.image,
+                area,
+                position.angle,
+                new Vector2f(area.left + area.width / 2, area.top + area.height / 2), // rotation around center
+                appearance.color
+        );
     }
 
 }

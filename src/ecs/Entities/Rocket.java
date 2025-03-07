@@ -23,9 +23,8 @@ public class Rocket {
         rocket.add(new ecs.Components.KeyboardControlled(
                 Map.of(
                         GLFW_KEY_UP, ecs.Components.Movable.Direction.Up,
-                        GLFW_KEY_DOWN, ecs.Components.Movable.Direction.Down,
-                        GLFW_KEY_LEFT, ecs.Components.Movable.Direction.Left,
-                        GLFW_KEY_RIGHT, ecs.Components.Movable.Direction.Right
+                        GLFW_KEY_LEFT, ecs.Components.Movable.Direction.RotationLeft,
+                        GLFW_KEY_RIGHT, ecs.Components.Movable.Direction.RotationRight
                 )));
 
         return rocket;

@@ -12,7 +12,7 @@ public class Terrain {
         var rocket = new Entity();
 
 
-        rocket.add(new ecs.Components.Position(x, y));
+        rocket.add(new ecs.Components.Position(x, y, 0f));
         rocket.add(new ecs.Components.Collision());
 
         return rocket;
