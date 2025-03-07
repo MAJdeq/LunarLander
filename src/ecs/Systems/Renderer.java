@@ -6,8 +6,6 @@ import edu.usu.graphics.Rectangle;
 import edu.usu.graphics.Texture;
 
 public class Renderer extends System {
-
-    private final int GRID_SIZE;
     private final float CELL_SIZE;
     private final float OFFSET_X;
     private final float OFFSET_Y;
@@ -20,16 +18,12 @@ public class Renderer extends System {
 
         OFFSET_X = 0.1f;
         OFFSET_Y = 0.1f;
-        GRID_SIZE = 50;
         CELL_SIZE = (1.0f - OFFSET_X * 2) / 50;
         this.graphics = graphics;
     }
 
     @Override
     public void update(double elapsedTime) {
-
-
-        // Draw a blue background for the gameplay area
         Rectangle rectSessler = new Rectangle(-1f, -.75f, 2f, 2f);
         Texture texture = new Texture("resources/images/space.jpg");
         graphics.draw(texture, rectSessler, Color.WHITE);

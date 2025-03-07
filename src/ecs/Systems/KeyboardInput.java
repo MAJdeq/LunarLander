@@ -1,6 +1,7 @@
 package ecs.Systems;
 
 import ecs.Components.KeyboardControlled;
+import ecs.Components.Acceleration;
 import ecs.Components.Movable;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -8,30 +9,30 @@ import static org.lwjgl.glfw.GLFW.*;
 public class KeyboardInput extends System {
 
     private final long window;
+    private final float THRUST = 20f; // Adjust thrust strength as desired
 
     public KeyboardInput(long window) {
-        super(ecs.Components.KeyboardControlled.class, ecs.Components.Movable.class);
+        super(KeyboardControlled.class, Acceleration.class, Movable.class);
         this.window = window;
     }
 
     @Override
     public void update(double elapsedTime) {
         for (var entity : entities.values()) {
-            var movable = entity.get(ecs.Components.Movable.class);
-            var input = entity.get(ecs.Components.KeyboardControlled.class);
+            var acceleration = entity.get(Acceleration.class);
+            var input = entity.get(KeyboardControlled.class);
 
-            movable.facing = ecs.Components.Movable.Direction.Stopped; // Reset direction each update
+            acceleration.xAcceleration = 0f;
+            acceleration.yAcceleration = 0f;
 
             if (glfwGetKey(window, input.lookup.get(Movable.Direction.Up)) == GLFW_PRESS) {
-                movable.facing = ecs.Components.Movable.Direction.Up;
-            } else if (glfwGetKey(window, input.lookup.get(Movable.Direction.Down)) == GLFW_PRESS) {
-                movable.facing = Movable.Direction.Down;
-            } else if (glfwGetKey(window, input.lookup.get(Movable.Direction.Left)) == GLFW_PRESS) {
-                movable.facing = Movable.Direction.Left;
-            } else if (glfwGetKey(window, input.lookup.get(Movable.Direction.Right)) == GLFW_PRESS) {
-                movable.facing = Movable.Direction.Right;
-            } else {
-                movable.facing = Movable.Direction.Stopped;
+                acceleration.yAcceleration = -THRUST; // upward thrust
+            }
+            if (glfwGetKey(window, input.lookup.get(Movable.Direction.Left)) == GLFW_PRESS) {
+                acceleration.xAcceleration = -THRUST; // leftward thrust
+            }
+            if (glfwGetKey(window, input.lookup.get(Movable.Direction.Right)) == GLFW_PRESS) {
+                acceleration.xAcceleration = THRUST; // rightward thrust
             }
         }
     }

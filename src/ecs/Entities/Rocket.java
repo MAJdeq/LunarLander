@@ -14,10 +14,11 @@ public class Rocket {
         var rocket = new Entity();
 
         rocket.add(new ecs.Components.Appearance(square, Color.WHITE));
-        rocket.add(new ecs.Components.Position(x, y));
+        rocket.add(new ecs.Components.Position(x, y, 0));
         rocket.add(new ecs.Components.Collision());
         rocket.add(new ecs.Components.Gravity());
         rocket.add(new ecs.Components.Velocity());
+        rocket.add(new ecs.Components.Acceleration());
         rocket.add(new ecs.Components.Movable(ecs.Components.Movable.Direction.Stopped, MOVE_INTERVAL));
         rocket.add(new ecs.Components.KeyboardControlled(
                 Map.of(

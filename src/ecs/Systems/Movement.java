@@ -1,9 +1,6 @@
 package ecs.Systems;
 
-import ecs.Components.Gravity;
-import ecs.Components.Movable;
-import ecs.Components.Position;
-import ecs.Components.Velocity;
+import ecs.Components.*;
 
 public class Movement extends System {
     public Movement() {
@@ -14,6 +11,7 @@ public class Movement extends System {
     public void update(double elapsedTime) {
         for (var entity : entities.values()) {
             applyGravity(entity, elapsedTime);
+            applyAcceleration(entity, elapsedTime);
             moveEntity(entity, elapsedTime);
         }
     }
@@ -27,6 +25,14 @@ public class Movement extends System {
         }
     }
 
+    private void applyAcceleration(ecs.Entities.Entity entity, double elapsedTime){
+        var acceleration = entity.get(Acceleration.class);
+        var velocity = entity.get(Velocity.class);
+
+        velocity.xVelocity += (float) (acceleration.xAcceleration * elapsedTime);
+        velocity.yVelocity += (float) (acceleration.yAcceleration * elapsedTime);
+    }
+
     private void moveEntity(ecs.Entities.Entity entity, double elapsedTime) {
         var movable = entity.get(Movable.class);
         var velocity = entity.get(Velocity.class);
@@ -34,10 +40,10 @@ public class Movement extends System {
 
         float speed = 10f;
         switch (movable.facing) {
-            case Left:
+            case RotationLeft:
                 velocity.xVelocity = -speed;
                 break;
-            case Right:
+            case RotationRight:
                 velocity.xVelocity = speed;
                 break;
             case Up:

@@ -7,11 +7,14 @@ public class Movable extends Component {
         Up,
         Down,
         Left,
-        Right
+        Right,
+
+        RotationLeft,
+
+        RotationRight
     }
 
     public Direction facing;
-    public int segmentsToAdd = 0;
     public double moveInterval; // seconds
     public double elapsedInterval;
 
