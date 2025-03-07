@@ -11,6 +11,7 @@ public class Terrain {
     public static Entity create(Texture square, int x, int y) {
         var rocket = new Entity();
 
+
         rocket.add(new ecs.Components.Position(x, y));
         rocket.add(new ecs.Components.Collision());
 

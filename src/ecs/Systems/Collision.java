@@ -54,16 +54,15 @@ public class Collision extends System {
             if (entity.contains(ecs.Components.Collision.class) && entity.contains(ecs.Components.Position.class)) {
                 var ePosition = entity.get(ecs.Components.Position.class);
 
-                for (var segment : ePosition.segments) {
-                    if (aPosition.getX() == segment.x && aPosition.getY() == segment.y) {
-                        return true;
-                    }
+                if (aPosition.x == ePosition.x && aPosition.y == ePosition.y) {
+                    return true;
                 }
             }
         }
 
         return false;
     }
+
 
     /**
      * Returns a collection of all the movable entities.
@@ -90,19 +89,8 @@ public class Collision extends System {
         var aPosition = a.get(ecs.Components.Position.class);
         var bPosition = b.get(ecs.Components.Position.class);
 
-        // A movable can collide with itself: Check segment against the rest
-        if (a == b) {
-            // Have to skip the first segment, that's why using a counted for loop
-            for (int segment = 1; segment < aPosition.segments.size(); segment++) {
-                if (aPosition.getX() == aPosition.segments.get(segment).x && aPosition.getY() == aPosition.segments.get(segment).y) {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        return aPosition.getX() == bPosition.getX() && aPosition.getY() == bPosition.getY();
+        return aPosition.x == bPosition.x && aPosition.y == bPosition.y;
     }
+
 
 }
