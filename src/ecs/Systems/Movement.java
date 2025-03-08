@@ -35,30 +35,36 @@ public class Movement extends System {
 
     private void moveEntity(ecs.Entities.Entity entity, double elapsedTime) {
         var movable = entity.get(Movable.class);
-        var velocity = entity.get(Velocity.class);
         var position = entity.get(Position.class);
+        var velocity = entity.get(Velocity.class);
 
-        float rotationSpeed = 50f; // degrees per second (adjust as needed)
-        float thrustSpeed = 50f;   // thrust speed (adjust as needed)
+        float rotationSpeed = 50f; // Adjust rotation speed as needed
+        float thrustAcceleration = 50f; // Adjust thrust acceleration as needed
 
         switch (movable.facing) {
             case RotationLeft:
-                position.angle -= (float) (rotationSpeed * elapsedTime);
+                position.angle -= rotationSpeed * elapsedTime;
                 break;
             case RotationRight:
-                position.angle += (float) (rotationSpeed * elapsedTime);
+                position.angle += rotationSpeed * elapsedTime;
                 break;
             case Up:
-                velocity.xVelocity += (float) (Math.cos(Math.toRadians(position.angle - 90)) * thrustSpeed * elapsedTime);
-                velocity.yVelocity += (float) (Math.sin(Math.toRadians(position.angle - 90)) * thrustSpeed * elapsedTime);
+                // Only apply thrust when explicitly thrusting (up key)
+                velocity.xVelocity += (float)Math.cos(Math.toRadians(position.angle - 90)) * thrustAcceleration * elapsedTime;
+                velocity.yVelocity += (float)Math.sin(Math.toRadians(position.angle - 90)) * thrustAcceleration * elapsedTime;
                 break;
             case Stopped:
-                // Optionally add friction here if desired
+                // No rotation or thrust applied
                 break;
         }
 
-        position.x += (float) (velocity.xVelocity * elapsedTime);
-        position.y += (float) (velocity.yVelocity * elapsedTime);
+        // Gravity always affects vertical velocity
+        velocity.yVelocity += entity.get(Gravity.class).acceleration * elapsedTime;
+
+        // Update position based solely on velocity
+        position.x += velocity.xVelocity * elapsedTime;
+        position.y += velocity.yVelocity * elapsedTime;
     }
+
 
 }
