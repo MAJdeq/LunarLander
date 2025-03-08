@@ -38,18 +38,17 @@ public class Movement extends System {
         var position = entity.get(Position.class);
         var velocity = entity.get(Velocity.class);
 
-        float rotationSpeed = 50f; // Adjust rotation speed as needed
-        float thrustAcceleration = 50f; // Adjust thrust acceleration as needed
+        float rotationSpeed = 10f; // Adjust rotation speed as needed
+        float thrustAcceleration = 20f; // Adjust thrust acceleration as needed
 
         switch (movable.facing) {
             case RotationLeft:
-                position.angle -= rotationSpeed * elapsedTime;
+                position.angle -= (float) (rotationSpeed * elapsedTime);
                 break;
             case RotationRight:
-                position.angle += rotationSpeed * elapsedTime;
+                position.angle += (float) (rotationSpeed * elapsedTime);
                 break;
             case Up:
-                // Only apply thrust when explicitly thrusting (up key)
                 velocity.xVelocity += (float)Math.cos(Math.toRadians(position.angle - 90)) * thrustAcceleration * elapsedTime;
                 velocity.yVelocity += (float)Math.sin(Math.toRadians(position.angle - 90)) * thrustAcceleration * elapsedTime;
                 break;
@@ -59,11 +58,11 @@ public class Movement extends System {
         }
 
         // Gravity always affects vertical velocity
-        velocity.yVelocity += entity.get(Gravity.class).acceleration * elapsedTime;
+        velocity.yVelocity += (float) (entity.get(Gravity.class).acceleration * elapsedTime);
 
         // Update position based solely on velocity
-        position.x += velocity.xVelocity * elapsedTime;
-        position.y += velocity.yVelocity * elapsedTime;
+        position.x += (float) (velocity.xVelocity * elapsedTime);
+        position.y += (float) (velocity.yVelocity * elapsedTime);
     }
 
 

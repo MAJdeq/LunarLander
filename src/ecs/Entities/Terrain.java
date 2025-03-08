@@ -9,12 +9,11 @@ import static org.lwjgl.glfw.GLFW.*;
 
 public class Terrain {
     public static Entity create(Texture square, int x, int y) {
-        var rocket = new Entity();
+        var terrain = new Entity();
+//        terrain.add(new ecs.Components.Appearance(Null, Color.WHITE));
+        terrain.add(new ecs.Components.Position(x, y, 0f));
+        terrain.add(new ecs.Components.Collision());
 
-
-        rocket.add(new ecs.Components.Position(x, y, 0f));
-        rocket.add(new ecs.Components.Collision());
-
-        return rocket;
+        return terrain;
     }
 }

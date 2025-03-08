@@ -5,11 +5,10 @@ import edu.usu.graphics.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class GameModel {
     private final int GRID_SIZE = 50;
-    private final int OBSTACLE_COUNT = 15;
-
     private final List<Entity> removeThese = new ArrayList<>();
     private final List<Entity> addThese = new ArrayList<>();
 
@@ -21,7 +20,7 @@ public class GameModel {
     public void initialize(Graphics2D graphics) {
         var texSquare = new Texture("resources/images/rocket.png");
 
-        sysRenderer = new Renderer(graphics);
+        sysRenderer = new Renderer(graphics, 50);
         sysCollision = new Collision((Entity entity) -> {
 
         });
@@ -30,6 +29,7 @@ public class GameModel {
 
 
         initializeRocket(texSquare);
+        initializeTerrain();
     }
 
     public void update(double elapsedTime) {
@@ -80,6 +80,38 @@ public class GameModel {
                 done = true;
             }
         }
+    }
+
+    private void initializeTerrain(){
+
+    }
+
+    public static double[] generate(int iterations, double initialRange) {
+        int size = (int) Math.pow(2, iterations) + 1;
+        double[] data = new double[size];
+        Random random = new Random();
+
+        // Initialize endpoints with random values
+        data[0] = random.nextDouble() * initialRange;
+        data[size - 1] = random.nextDouble() * initialRange;
+
+        // Recursive displacement
+        displace(data, 0, size - 1, initialRange, random);
+
+        return data;
+    }
+
+    private static void displace(double[] data, int left, int right, double range, Random random) {
+        if (right - left <= 1) {
+            return; // Base case: interval too small
+        }
+
+        int mid = (left + right) / 2;
+        data[mid] = (data[left] + data[right]) / 2 + (random.nextDouble() - 0.5) * range;
+
+        // Recursive calls with reduced range
+        displace(data, left, mid, range / 2, random);
+        displace(data, mid, right, range / 2, random);
     }
 
 }

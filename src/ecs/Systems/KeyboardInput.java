@@ -6,7 +6,7 @@ import static org.lwjgl.glfw.GLFW.*;
 public class KeyboardInput extends System {
 
     private final long window;
-    private final float ROTATION_SPEED = 90f; // degrees per second
+    private final float ROTATION_SPEED = 5f; // degrees per second
     private final float THRUST = 20f; // thrust acceleration
 
     public KeyboardInput(long window) {

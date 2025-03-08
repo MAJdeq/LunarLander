@@ -7,27 +7,29 @@ import edu.usu.graphics.Texture;
 import org.joml.Vector2f;
 
 public class Renderer extends System {
+    private final int GRID_SIZE;
     private final float CELL_SIZE;
     private final float OFFSET_X;
     private final float OFFSET_Y;
 
     private final Graphics2D graphics;
 
-    public Renderer(Graphics2D graphics) {
+    public Renderer(Graphics2D graphics, int gridSize) {
         super(ecs.Components.Appearance.class,
                 ecs.Components.Position.class);
 
         OFFSET_X = 0.1f;
         OFFSET_Y = 0.1f;
-        CELL_SIZE = (1.0f - OFFSET_X * 2) / 50;
+        CELL_SIZE = (1.0f - OFFSET_X * 2) / gridSize;
+        GRID_SIZE = gridSize;
         this.graphics = graphics;
     }
 
     @Override
     public void update(double elapsedTime) {
-        Rectangle rectSessler = new Rectangle(-1f, -.75f, 2f, 2f);
+        Rectangle area = new Rectangle(-0.5f + OFFSET_X, -0.5f + OFFSET_Y, GRID_SIZE * CELL_SIZE, GRID_SIZE * CELL_SIZE);
         Texture texture = new Texture("resources/images/space.jpg");
-        graphics.draw(texture, rectSessler, Color.WHITE);
+        graphics.draw(texture, area, Color.WHITE);
 
         // Draw each of the game entities!
         for (var entity : entities.values()) {
