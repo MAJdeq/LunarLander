@@ -25,45 +25,32 @@ public class Movement extends System {
         }
     }
 
-    private void applyAcceleration(ecs.Entities.Entity entity, double elapsedTime){
+
+    private void applyAcceleration(ecs.Entities.Entity entity, double elapsedTime) {
         var acceleration = entity.get(Acceleration.class);
         var velocity = entity.get(Velocity.class);
 
-        velocity.xVelocity += (float) (acceleration.xAcceleration * elapsedTime);
-        velocity.yVelocity += (float) (acceleration.yAcceleration * elapsedTime);
+        if (acceleration != null && velocity != null) {
+            velocity.xVelocity += acceleration.xAcceleration * elapsedTime;
+            velocity.yVelocity += acceleration.yAcceleration * elapsedTime;
+        }
     }
-
     private void moveEntity(ecs.Entities.Entity entity, double elapsedTime) {
-        var movable = entity.get(Movable.class);
         var position = entity.get(Position.class);
         var velocity = entity.get(Velocity.class);
 
-        float rotationSpeed = 10f; // Adjust rotation speed as needed
-        float thrustAcceleration = 20f; // Adjust thrust acceleration as needed
+        float stopThreshold = 0.05f;
+        if (Math.abs(velocity.xVelocity) < stopThreshold) velocity.xVelocity = 0;
+        if (Math.abs(velocity.yVelocity) < stopThreshold) velocity.yVelocity = 0;
 
-        switch (movable.facing) {
-            case RotationLeft:
-                position.angle -= (float) (rotationSpeed * elapsedTime);
-                break;
-            case RotationRight:
-                position.angle += (float) (rotationSpeed * elapsedTime);
-                break;
-            case Up:
-                velocity.xVelocity += (float)Math.cos(Math.toRadians(position.angle - 90)) * thrustAcceleration * elapsedTime;
-                velocity.yVelocity += (float)Math.sin(Math.toRadians(position.angle - 90)) * thrustAcceleration * elapsedTime;
-                break;
-            case Stopped:
-                // No rotation or thrust applied
-                break;
-        }
+        // Apply damping to gradually reduce velocity when no acceleration
+        float dampingFactor = 0.98f; // Adjust between 0.9 - 1 for different levels of friction
+        velocity.xVelocity *= dampingFactor;
+        velocity.yVelocity *= dampingFactor;
 
-        // Gravity always affects vertical velocity
-        velocity.yVelocity += (float) (entity.get(Gravity.class).acceleration * elapsedTime);
-
-        // Update position based solely on velocity
-        position.x += (float) (velocity.xVelocity * elapsedTime);
-        position.y += (float) (velocity.yVelocity * elapsedTime);
+        // Update position based on velocity
+        position.x += velocity.xVelocity * elapsedTime;
+        position.y += velocity.yVelocity * elapsedTime;
     }
-
 
 }

@@ -21,6 +21,7 @@ public class Game {
     GameStateEnum prevStateEnum = GameStateEnum.MainMenu;
 
     private Texture texSessler;
+    private Texture blankSessler;
     public Game(Graphics2D graphics) {
         this.graphics = graphics;
     }
@@ -42,7 +43,8 @@ public class Game {
         currentState = states.get(GameStateEnum.MainMenu);
         currentState.initializeSession();
 
-        texSessler = new Texture("resources/images/space.jpg");;
+        texSessler = new Texture("resources/images/space.jpg");
+        blankSessler = new Texture("resources/images/white.png");
         particleSystemFire = new ParticleSystem(
                 new Vector2f(0, 0),
                 0.01f, 0.005f,

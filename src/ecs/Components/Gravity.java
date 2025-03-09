@@ -1,7 +1,7 @@
 package ecs.Components;
 
 public class Gravity extends Component {
-    public static final float DEFAULT_GRAVITY = 9.8f; // Earth's gravity in m/s² (adjust for game scale)
+    public static final float DEFAULT_GRAVITY = 1.62f; // Earth's gravity in m/s² (adjust for game scale)
     public float acceleration;
 
     public Gravity() {

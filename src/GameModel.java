@@ -2,6 +2,8 @@ import ecs.Entities.*;
 import ecs.Systems.*;
 import ecs.Systems.KeyboardInput;
 import edu.usu.graphics.*;
+import org.joml.Vector2f;
+import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,7 @@ public class GameModel {
 
     public void initialize(Graphics2D graphics) {
         var texSquare = new Texture("resources/images/rocket.png");
+        var blankTri = new Texture("resources/images/white.png");
 
         sysRenderer = new Renderer(graphics, 50);
         sysCollision = new Collision((Entity entity) -> {
@@ -29,7 +32,7 @@ public class GameModel {
 
 
         initializeRocket(texSquare);
-        initializeTerrain();
+        initializeTerrain(blankTri);
     }
 
     public void update(double elapsedTime) {
@@ -81,10 +84,45 @@ public class GameModel {
             }
         }
     }
+    private void initializeTerrain(Texture triangle) {
+        int iterations = 6;
+        double initialRange = 40;
+        double[] heights = generate(iterations, initialRange);
 
-    private void initializeTerrain(){
+        List<Vector2f> terrainPoints = new ArrayList<>();
+        int size = heights.length;
 
+        for (int i = 0; i < size; i++) {
+            float x = (float) i / (size - 1) * GRID_SIZE;
+            float y = (float) (GRID_SIZE - heights[i]); // Invert height
+            terrainPoints.add(new Vector2f(x, y));
+        }
+
+        // Generate terrain one segment at a time
+        for (int i = 0; i < terrainPoints.size() - 1; i++) {
+            Vector2f p1 = terrainPoints.get(i);       // Top-left
+            Vector2f p2 = terrainPoints.get(i + 1);   // Top-right
+            Vector2f p3 = new Vector2f(p1.x, GRID_SIZE); // Bottom-left
+            Vector2f p4 = new Vector2f(p2.x, GRID_SIZE); // Bottom-right
+
+            // Create two triangles per segment
+            Triangle t1 = new Triangle(new Vector3f(p1.x, p1.y, 0), new Vector3f(p2.x, p2.y, 0), new Vector3f(p3.x, p3.y, 0));
+            Triangle t2 = new Triangle(new Vector3f(p2.x, p2.y, 0), new Vector3f(p3.x, p3.y, 0), new Vector3f(p4.x, p4.y, 0));
+
+            // Create entities for each triangle
+            Entity terrainEntity1 = Terrain.create(triangle, t1);
+            Entity terrainEntity2 = Terrain.create(triangle, t2);
+
+            // Add each triangle as a separate entity
+            addEntity(terrainEntity1);
+            addEntity(terrainEntity2);
+        }
     }
+
+
+
+
+
 
     public static double[] generate(int iterations, double initialRange) {
         int size = (int) Math.pow(2, iterations) + 1;

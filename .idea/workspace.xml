@@ -5,12 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8858ee06-ea5c-4baa-8898-f17b08ca1729" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/ecs/Components/TriangleComponent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GameModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ecs/Components/Gravity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ecs/Components/Gravity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ecs/Entities/Terrain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ecs/Entities/Terrain.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ecs/Systems/KeyboardInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ecs/Systems/KeyboardInput.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ecs/Systems/Movement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ecs/Systems/Movement.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ecs/Systems/Renderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ecs/Systems/Renderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ecs/Systems/System.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ecs/Systems/System.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +50,7 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/majde/Downloads/ECS - Snake Game",
+    "last_opened_file_path": "/Users/ethanford/School/cs5410/LunarLander",
     "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
@@ -65,7 +69,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Driver - Windows/Linux">
+  <component name="RunManager" selected="Application.Driver - macOS">
     <configuration name="Driver - Windows/Linux" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="LunarLander" />
       <module name="Starter-Project" />
@@ -86,13 +90,6 @@
       <item itemvalue="Application.Driver - macOS" />
     </list>
   </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-322ed176" />
-      </set>
-    </attachedChunks>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -105,6 +102,20 @@
     <servers />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/ecs/Systems/Renderer.java</url>
+          <line>35</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="ecs.Systems.Renderer" memberName="entities" />
+      </pinned-members>
+    </pin-to-top-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="allChars.length()" language="JAVA" />
